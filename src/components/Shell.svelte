@@ -11,17 +11,22 @@
       SideNavLink,
       SideNavDivider,
       SkipToContent,
-    } from "carbon-components-svelte";
+      Content,
+    } from "carbon-components-svelte"
 
-    import Onboard from "./Onboard.svelte";
+    import {SinkStore} from "../stores"
+    import Onboard from "./Onboard.svelte"
     import Connect from "./Connect.svelte"
+    import SinkForm from "./SinkForm.svelte";
+
+    console.log($SinkStore)
   
-    let isSideNavOpen = false;
+    let isSideNavOpen = false
 </script>
   
   <Header company="stellarcarbon" platformName="Offset" bind:isSideNavOpen>
     <svelte:fragment slot="skip-to-content">
-      <SkipToContent href="#onboard" />
+      <SkipToContent />
     </svelte:fragment>
   </Header>
   
@@ -37,5 +42,12 @@
     </SideNavItems>
   </SideNav>
   
-  <Onboard />
-  <Connect />
+  <Content>
+    {#if $SinkStore.onboarded === false}
+        <Onboard />
+    {:else if !$SinkStore.userEmail}
+        <Connect />
+    {:else}
+        <SinkForm />
+    {/if}
+  </Content>

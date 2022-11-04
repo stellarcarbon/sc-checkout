@@ -1,6 +1,5 @@
 <script>
     import {
-      Content,
       Grid,
       Row,
       Column,
@@ -8,33 +7,39 @@
       Button,
     } from "carbon-components-svelte";
 
+    import {SinkStore} from "../stores"
+
     let termsAgreed = false;
+    const handleConnect = () => {
+        SinkStore.update((sink) => {
+            return {...sink, onboarded: true}
+        });
+        console.log($SinkStore)
+    }
 </script>
 
-  <Content id="onboard">
-    <Grid>
-      <Row>
-        <Column>
-          <h1>Welcome</h1>
-        </Column>
-      </Row>
-      <Row>
-        <Column>
-          <p>Please connect your wallet to continue</p>
-        </Column>
-      </Row>
-      <Row>
-        <Column>
-          <Checkbox 
-            labelText="By connecting your wallet you agree with our Terms of Use and Privacy Policy"
-            bind:checked={termsAgreed} 
-        />
-        </Column>
-      </Row>
-      <Row>
-        <Column>
-          <Button disabled={!termsAgreed}>Connect</Button>
-        </Column>
-      </Row>
-    </Grid>
-  </Content>
+  <Grid>
+    <Row>
+    <Column>
+        <h1>Welcome</h1>
+    </Column>
+    </Row>
+    <Row>
+    <Column>
+        <p>Please connect your wallet to continue</p>
+    </Column>
+    </Row>
+    <Row>
+    <Column>
+      <Checkbox 
+        labelText="By connecting your wallet you agree with our Terms of Use and Privacy Policy"
+        bind:checked={termsAgreed} 
+      />
+    </Column>
+    </Row>
+    <Row>
+    <Column>
+        <Button disabled={!termsAgreed} on:click={handleConnect}>Connect</Button>
+    </Column>
+    </Row>
+  </Grid>
