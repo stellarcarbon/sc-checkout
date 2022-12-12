@@ -5,13 +5,15 @@
   "scripts": {
     "build": "rollup -c",
     "dev": "rollup -c -w",
-    "start": "sirv public --no-clear"
+    "start": "sirv public --no-clear",
+    "generate-client": "openapi --input https://api-beta.stellarcarbon.io/openapi.json --output ./src/client --client axios"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^17.0.0",
     "@rollup/plugin-node-resolve": "^11.0.0",
     "carbon-components-svelte": "^0.70.12",
     "carbon-pictograms-svelte": "^12.2.0",
+    "openapi-typescript-codegen": "^0.23.0",
     "rollup": "^2.3.4",
     "rollup-plugin-css-only": "^3.1.0",
     "rollup-plugin-livereload": "^2.0.0",

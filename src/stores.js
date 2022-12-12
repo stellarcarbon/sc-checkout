@@ -6,4 +6,5 @@ export const SinkStore = writable({
     userName: "",
     userEmail: "",
     carbonAmount: 1,
+    memo: "",
 })
