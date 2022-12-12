@@ -16,14 +16,14 @@
 
     const handleConnect = () => {
       SinkStore.update((sink) => {
-            return {...sink, pubkey: "GAVF6ZB7Z7FKCWM5HEY2OV4ENPK3OSSHMFTVR4HHSBFHKW36U3FUH2CB"}
-        });
+          return {...sink, pubkey: "GAVF6ZB7Z7FKCWM5HEY2OV4ENPK3OSSHMFTVR4HHSBFHKW36U3FUH2CB"}
+      });
         console.log($SinkStore)
     }
     const handleSave = () => {
       SinkStore.update((sink) => {
-            return {...sink, userName: userName, userEmail: userEmail || "left@blank.xyz"}
-        });
+          return {...sink, userName: userName, userEmail: userEmail || "left@blank.xyz"}
+      });
         console.log($SinkStore)
     }
 
@@ -33,8 +33,8 @@
   {#if !$SinkStore.pubkey}
     <h2>Connect your wallet</h2>
     <SkeletonPlaceholder />
-    <a href="#">Wallet Connect v2 URI</a>
-    <Button on:click={handleConnect}>*connected</Button>
+    <p><a href="#">Wallet Connect v2 URI</a></p>
+    <p><Button on:click={handleConnect} kind="ghost">*wallet connected*</Button></p>
   {:else}
     <SkeletonPlaceholder />
     <h3>Done</h3>
