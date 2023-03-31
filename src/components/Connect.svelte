@@ -33,7 +33,7 @@
   {#if !$SinkStore.pubkey}
     <h2>Connect your wallet</h2>
     <SkeletonPlaceholder />
-    <p><a href="#">Wallet Connect v2 URI</a></p>
+    <p><a href="#0">Wallet Connect v2 URI</a></p>
     <p><Button on:click={handleConnect} kind="ghost">*wallet connected*</Button></p>
   {:else}
     <SkeletonPlaceholder />
