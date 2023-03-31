@@ -15,8 +15,8 @@
 
     import Airplane from "carbon-pictograms-svelte/lib/Airplane.svelte";
     import DeliveryTruck from "carbon-pictograms-svelte/lib/DeliveryTruck.svelte"
-    import Earth from "carbon-pictograms-svelte/lib/Earth.svelte";
-    import PragueDancingHouse_02 from "carbon-pictograms-svelte/lib/PragueDancingHouse_02.svelte"
+    import Sustainability from "carbon-pictograms-svelte/lib/Sustainability.svelte";
+    import HomeFront from "carbon-pictograms-svelte/lib/HomeFront.svelte"
 
     import { SinkStore } from "../stores"
 
@@ -94,8 +94,8 @@
             <p>Select a reason</p>
             <ButtonSet>
               
-                <button on:click={memoEarth}><Earth /></button>
-                <button on:click={memoHouse} size="small"><PragueDancingHouse_02 /></button>
+                <button on:click={memoEarth}><Sustainability /></button>
+                <button on:click={memoHouse} size="small"><HomeFront /></button>
                 <button on:click={memoAir} size="small"><Airplane /></button>
                 <button on:click={memoRoad} size="small"><DeliveryTruck /></button>
             </ButtonSet>
