@@ -92,12 +92,11 @@
     <FormGroup>
         <Tile>
             <p>Select a reason</p>
-            <ButtonSet>
-              
+            <ButtonSet>              
                 <button on:click={memoEarth}><Sustainability /></button>
-                <button on:click={memoHouse} size="small"><HomeFront /></button>
-                <button on:click={memoAir} size="small"><Airplane /></button>
-                <button on:click={memoRoad} size="small"><DeliveryTruck /></button>
+                <button on:click={memoHouse}><HomeFront /></button>
+                <button on:click={memoAir}><Airplane /></button>
+                <button on:click={memoRoad}><DeliveryTruck /></button>
             </ButtonSet>
         </Tile>
         <Tile>
