@@ -12,19 +12,32 @@
 
     import { StellarWalletsKit, WalletNetwork, WalletType } from 'stellar-wallets-kit';
 
-    import {SinkStore} from "../stores"
+    import {SinkStore, WalletStore} from "../stores"
 
     let supportedWallets = StellarWalletsKit.getSupportedWallets();
     let userWallet = WalletType.ALBEDO;
-    const handleWallet = (walletType) => {
+    const handleWallet = (walletType: WalletType) => {
       userWallet = walletType;
     }
-    console.log(supportedWallets)
 
     let termsAgreed = false;
-    const handleConnect = () => {
+    const handleConnect = async () => {
+        let walletKit = new StellarWalletsKit({
+          selectedWallet: userWallet, 
+          network: WalletNetwork.PUBLIC
+        });
+        let walletAddress = "";
+        if (userWallet === WalletType.WALLET_CONNECT){
+          // await kit.startWalletConnect ...
+        } else {
+          walletAddress = await walletKit.getPublicKey().catch((error) => {
+            console.error(error);
+            return ""
+          });
+        }
+        WalletStore.set(walletKit);
         SinkStore.update((sink) => {
-            return {...sink, onboarded: true}
+          return {...sink, onboarded: true, pubkey: walletAddress}
         });
         console.log($SinkStore)
     }
@@ -42,7 +55,8 @@
         <UnorderedList>
           {#each supportedWallets as wallet}
             <ListItem>
-              <Link href="#0" on:click={() => handleWallet(wallet.type)}>{wallet.name}</Link>
+              <Link href="#0" on:click={() => handleWallet(wallet.type)} disabled={!wallet.isAvailable}>
+                {wallet.name}</Link>
             </ListItem>
           {/each}
         </UnorderedList>
