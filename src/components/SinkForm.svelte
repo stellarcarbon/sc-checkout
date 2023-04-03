@@ -14,24 +14,14 @@
     } from "carbon-components-svelte"
 
     import Airplane from "carbon-pictograms-svelte/lib/Airplane.svelte";
-    import DeliveryTruck from "carbon-pictograms-svelte/lib/DeliveryTruck.svelte"
+    import DeliveryTruck from "carbon-pictograms-svelte/lib/DeliveryTruck.svelte";
     import Sustainability from "carbon-pictograms-svelte/lib/Sustainability.svelte";
-    import HomeFront from "carbon-pictograms-svelte/lib/HomeFront.svelte"
+    import HomeFront from "carbon-pictograms-svelte/lib/HomeFront.svelte";
 
-    import { SinkStore } from "../stores"
+    import { SinkStore } from "../stores";
+    import { CarbonService } from "../client";
 
-    const apiUrl = "https://api-beta.stellarcarbon.io"
-    async function getQuote(amount) {
-        const res = await fetch(`${apiUrl}/carbon-quote?carbon_amount=${amount}`)
-        const quote = await res.json()
-
-        if (res.ok) {
-            return quote
-        } else {
-            throw new Error(quote.detail[0].msg)
-        }
-    }
-    $: quotePromise = getQuote($SinkStore.carbonAmount)
+    $: quotePromise = CarbonService.getCarbonQuoteCarbonQuoteGet($SinkStore.carbonAmount)
 
     const memoEarth = () => {
       SinkStore.update((sink) => {
