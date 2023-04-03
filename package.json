@@ -8,7 +8,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "check": "svelte-check --tsconfig ./tsconfig.json",
-    "generate-client": "openapi --input https://api-beta.stellarcarbon.io/openapi.json --output ./src/client --client axios"
+    "generate-client": "openapi --useOptions --input https://api-beta.stellarcarbon.io/openapi.json --output ./src/client --client axios"
   },
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "^2.0.3",

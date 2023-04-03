@@ -22,13 +22,14 @@ export class CarbonService {
      *
      * This quote is non-binding and does not take into account the amount of CARBON that we are
      * currently able to provide from our pool.
-     * @param carbonAmount
      * @returns QuoteResponse Successful Response
      * @throws ApiError
      */
-    public static getCarbonQuoteCarbonQuoteGet(
-        carbonAmount: number = 1,
-    ): CancelablePromise<QuoteResponse> {
+    public static getCarbonQuoteCarbonQuoteGet({
+        carbonAmount = 1,
+    }: {
+        carbonAmount?: number,
+    }): CancelablePromise<QuoteResponse> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/carbon-quote',
@@ -61,27 +62,28 @@ export class CarbonService {
      * from the possible paths. The USDC value of this payment is included in the response for
      * convenience, but it is advisable to always check the generated XDR before signing and
      * submitting it to the network.
-     * @param funder
-     * @param recipient
-     * @param carbonAmount
-     * @param paymentAsset
-     * @param vcsProjectId
-     * @param memoType
-     * @param memoValue
-     * @param email
      * @returns SinkingResponse Successful Response
      * @throws ApiError
      */
-    public static buildSinkCarbonXdrSinkCarbonXdrPost(
+    public static buildSinkCarbonXdrSinkCarbonXdrPost({
+        funder,
+        recipient,
+        carbonAmount = 1,
+        paymentAsset,
+        vcsProjectId,
+        memoType,
+        memoValue = '',
+        email,
+    }: {
         funder: string,
         recipient?: string,
-        carbonAmount: number = 1,
+        carbonAmount?: number,
         paymentAsset?: PaymentAsset,
         vcsProjectId?: VcsProject,
         memoType?: MemoType,
-        memoValue: string = '',
+        memoValue?: string,
         email?: string,
-    ): CancelablePromise<SinkingResponse> {
+    }): CancelablePromise<SinkingResponse> {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/sink-carbon/xdr',
