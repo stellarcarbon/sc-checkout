@@ -5,8 +5,8 @@
       Column,
       Checkbox,
       Button,
-      UnorderedList,
-      ListItem,
+      RadioButtonGroup,
+      RadioButton,
       Link,
     } from "carbon-components-svelte";
 
@@ -52,14 +52,15 @@
     <Row>
     <Column>
         <p>Please connect your wallet to continue</p>
-        <UnorderedList>
+        <RadioButtonGroup 
+          orientation="vertical"
+          legendText="Supported wallets:" 
+          bind:selected={userWallet}
+        >
           {#each supportedWallets as wallet}
-            <ListItem>
-              <Link href="#0" on:click={() => handleWallet(wallet.type)} disabled={!wallet.isAvailable}>
-                {wallet.name}</Link>
-            </ListItem>
+            <RadioButton labelText={wallet.name} value={wallet.type} disabled={!wallet.isAvailable} />
           {/each}
-        </UnorderedList>
+        </RadioButtonGroup>
     </Column>
     </Row>
     <Row>
