@@ -23,8 +23,9 @@
     import {SinkStore, WalletStore} from "../stores";
     import { CarbonService } from "../client";
 
+    let carbonAmount = get(SinkStore).carbonAmount
     $: quotePromise = CarbonService.getCarbonQuoteCarbonQuoteGet({
-      carbonAmount: $SinkStore.carbonAmount
+      carbonAmount: carbonAmount
     })
 
     const memoEarth = () => {
@@ -53,6 +54,10 @@
     const handleSink = async () => {
       submitState = "active"
       const walletKit = get(WalletStore)
+
+      SinkStore.update((sink) => {
+        return {...sink, carbonAmount: carbonAmount}
+      });
       let email = $SinkStore.userEmail
       if ($SinkStore.userName) {
         email = `${$SinkStore.userName} <${$SinkStore.userEmail}>`
@@ -99,7 +104,7 @@
   }}>
     <FormGroup legendText="Amount">
         <Slider
-            bind:value={$SinkStore.carbonAmount}
+            bind:value={carbonAmount}
             labelText="CARBON (in tonnes CO2-equivalent: tCO₂-e)"
             min={1}
             max={120}
