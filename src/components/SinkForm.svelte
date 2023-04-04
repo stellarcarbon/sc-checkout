@@ -48,7 +48,7 @@
       });
     }
 
-    let submitState = "inactive"
+    let submitState: "active" | "inactive" | "finished" | "error" = "inactive"
     let submitDescription = "Building transaction..."
     const handleSink = async () => {
       submitState = "active"
