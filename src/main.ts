@@ -1,5 +1,6 @@
 import { OpenAPI } from './client';
 import App from './App.svelte'
+import './global.scss';
 
 OpenAPI.BASE = "https://api-beta.stellarcarbon.io";
 

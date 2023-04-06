@@ -1,15 +1,6 @@
 <script lang="ts">
     import {
       Header,
-      HeaderNav,
-      HeaderNavItem,
-      HeaderNavMenu,
-      SideNav,
-      SideNavItems,
-      SideNavMenu,
-      SideNavMenuItem,
-      SideNavLink,
-      SideNavDivider,
       SkipToContent,
       Content,
     } from "carbon-components-svelte"
@@ -21,26 +12,13 @@
 
     console.log($SinkStore)
   
-    let isSideNavOpen = false
 </script>
   
-  <Header company="stellarcarbon" platformName="Offset" bind:isSideNavOpen>
+  <Header company="Stellarcarbon" platformName="Offset">
     <svelte:fragment slot="skip-to-content">
       <SkipToContent />
     </svelte:fragment>
   </Header>
-  
-  <SideNav bind:isOpen={isSideNavOpen}>
-    <SideNavItems>
-      <SideNavLink href="#onboard" text="Onboard" />
-      <SideNavDivider />
-      <SideNavLink href="#connect-start" text="Connect-start" />
-      <SideNavLink href="#connect-done" text="Connect-done" />
-      <SideNavLink href="#contact-info" text="Contact-info" />
-      <SideNavDivider />
-      <SideNavLink text="Offset form" />
-    </SideNavItems>
-  </SideNav>
   
   <Content>
     {#if $SinkStore.onboarded === false}
