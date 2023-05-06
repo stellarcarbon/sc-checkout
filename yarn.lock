@@ -1924,9 +1924,9 @@ split2@^4.0.0:
   resolved "https://registry.yarnpkg.com/split2/-/split2-4.2.0.tgz#c9c5920904d148bab0b9f67145f245a86aadbfa4"
   integrity sha512-UcjcJOWknrNkF6PLX83qcHM6KHgVKNkV62Y8a5uYDVv9ydGQVwAHMKqHdJje1VTWpljG0WYpCDhrCdAOYH4TWg==
 
-"stellar-wallets-kit@github:Creit-Tech/Stellar-Wallets-Kit":
-  version "0.0.6"
-  resolved "https://codeload.github.com/Creit-Tech/Stellar-Wallets-Kit/tar.gz/8125dc74cacb10476b50d5c666684f170b28344b"
+"stellar-wallets-kit@github:Creit-Tech/Stellar-Wallets-Kit#v0.0.7":
+  version "0.0.7"
+  resolved "https://codeload.github.com/Creit-Tech/Stellar-Wallets-Kit/tar.gz/44296a7c818b3b62a04fb1a7d38d809c2ee50a6d"
   dependencies:
     "@albedo-link/intent" "^0.12.0"
     "@creit-tech/xbull-wallet-connect" "github:Creit-Tech/xBull-Wallet-Connect"
