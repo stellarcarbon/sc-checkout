@@ -23,8 +23,9 @@
     import HomeFront from "carbon-pictograms-svelte/lib/HomeFront.svelte";
 
     import { get } from 'svelte/store';
-    import {SinkStore, WalletStore} from "../stores";
-    import { ApiError, CarbonService, PaymentAsset } from "../client";
+    import { SinkStore, WalletStore } from "../stores";
+    import { ApiError, CarbonService, PaymentAsset, type OpenAPIConfig } from "../client";
+    import { request as __request } from "../client/core/request";
 
     let carbonAmount = get(SinkStore).carbonAmount
     $: quotePromise = CarbonService.getCarbonQuoteCarbonQuoteGet({
@@ -75,12 +76,34 @@
           email: email
         })
         submitDescription = "Waiting for wallet..."
-        const signedXDR = await walletKit.sign({
+        const { signedXDR } = await walletKit.sign({
           xdr: sinkResp.tx_xdr,
           publicKey: $SinkStore.pubkey
         })
+        submitDescription = "Submitting to Horizon..."
+        console.log(signedXDR)
+        const horizonApi: OpenAPIConfig = {
+          BASE: "https://horizon.stellar.org",
+          VERSION: "latest",
+          WITH_CREDENTIALS: false,
+          CREDENTIALS: 'omit'
+        }
+        const horizonResp = await __request(
+          horizonApi, {
+            method: 'POST',
+            url: '/transactions',
+            query: {
+                'tx': signedXDR,
+            },
+            errors: {
+                400: `Transaction Failed`,
+                504: `Timeout`,
+            },
+          }
+        )
+        console.log(horizonResp)
         submitState = "finished"
-        submitDescription = "That's it for now. Tx submission not implemented."
+        submitDescription = `All done: ${horizonResp.id}`
       } catch (error) {
         submitState = "error"
         console.error(error.name, error.message)
