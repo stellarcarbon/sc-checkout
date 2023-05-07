@@ -27,10 +27,22 @@
     import { ApiError, CarbonService, PaymentAsset, type OpenAPIConfig } from "../client";
     import { request as __request } from "../client/core/request";
 
+    let quoteError = ""
     let carbonAmount = get(SinkStore).carbonAmount
-    $: quotePromise = CarbonService.getCarbonQuoteCarbonQuoteGet({
-      carbonAmount: carbonAmount
-    })
+    const getQuote = async (quoteAmount) => {
+      try {
+        return await CarbonService.getCarbonQuoteCarbonQuoteGet({
+          carbonAmount: carbonAmount
+        })
+      } catch (error) {
+        if (error instanceof ApiError) {
+          quoteError = error.body.detail[0].msg
+        } else {
+          throw error
+        }
+      }
+    }
+    $: quotePromise = getQuote(carbonAmount)
 
     const memoEarth = () => {
       SinkStore.update((sink) => {
@@ -56,6 +68,7 @@
     let submitState: "active" | "inactive" | "finished" | "error" = "inactive"
     let submitDescription = "Building transaction..."
     let submitErrors = []
+
     const handleSink = async () => {
       submitState = "active"
       const walletKit = get(WalletStore)
@@ -81,7 +94,6 @@
           publicKey: $SinkStore.pubkey
         })
         submitDescription = "Submitting to Horizon..."
-        console.log(signedXDR)
         const horizonApi: OpenAPIConfig = {
           BASE: "https://horizon.stellar.org",
           VERSION: "latest",
@@ -101,22 +113,42 @@
             },
           }
         )
-        console.log(horizonResp)
         submitState = "finished"
-        submitDescription = `All done: ${horizonResp.id}`
+        submitDescription = `All done! Tx hash: ${horizonResp.id}`
       } catch (error) {
         submitState = "error"
+        submitDescription = `${submitDescription} ${error.message}`
         console.error(error.name, error.message)
         if (error instanceof ApiError){
           console.log(error.request)
           console.log(error.body)
-          submitErrors = error.body.detail.map(
-            ({msg}) => msg
-          )
+          if (error.body.detail instanceof Array) {
+            submitErrors = error.body.detail.map(
+              ({msg}) => msg
+            )
+          } else {
+            submitErrors = [error.body.detail]
+          }
         }
       }
     }
 
+    const resetForm = () => {
+      submitErrors = []
+      submitState = "inactive"
+      submitDescription = "Building transaction..."
+      carbonAmount = 1
+      SinkStore.update((sink) => {
+        return {
+          ...sink, 
+          carbonAmount: 1,
+          memo: ""
+        }
+      });
+      setTimeout(() => {
+        window.scrollTo({ top: 0, behavior: 'smooth' })
+      }, 333)
+    }
 </script>
 
 <Grid>
@@ -151,6 +183,9 @@
         {:catch error}
             <p style="color: red">{error.message}</p>
         {/await}
+        {#if quoteError}
+          <InlineNotification title="Error:" subtitle={quoteError} />
+        {/if}
     </FormGroup>
     <FormGroup>
         <p>How would you like to pay?</p>
@@ -189,6 +224,11 @@
         {/each}
       {/if}
       <InlineLoading status={submitState} description={submitDescription} />
+      {#if submitState === "finished"}
+        <Button kind="tertiary" on:click={resetForm}>Go again</Button>
+      {:else if submitState === "error"}
+        <Button kind="tertiary" on:click={resetForm}>Try again</Button>
+      {/if}
     {:else}
       <Button on:click|once={handleSink}>Sign &amp; submit</Button>
     {/if}
