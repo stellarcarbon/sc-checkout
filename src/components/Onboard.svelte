@@ -7,6 +7,7 @@
       Button,
       RadioButtonGroup,
       RadioButton,
+      InlineNotification,
       Link,
     } from "carbon-components-svelte";
 
@@ -52,15 +53,19 @@
     <Row>
     <Column>
         <p>Please connect your wallet to continue</p>
-        <RadioButtonGroup 
-          orientation="vertical"
-          legendText="Supported wallets:" 
-          bind:selected={userWallet}
-        >
-          {#each supportedWallets as wallet}
-            <RadioButton labelText={wallet.name} value={wallet.type} disabled={!wallet.isAvailable} />
-          {/each}
-        </RadioButtonGroup>
+        {#await supportedWallets then wallets}
+          <RadioButtonGroup 
+            orientation="vertical"
+            legendText="Supported wallets:" 
+            bind:selected={userWallet}
+          >
+            {#each wallets as wallet}
+              <RadioButton labelText={wallet.name} value={wallet.type} disabled={!wallet.isAvailable} />
+            {/each}
+          </RadioButtonGroup>
+        {:catch error} 
+          <InlineNotification title="Error loading available wallets:" subtitle={error.msg} />
+        {/await}
     </Column>
     </Row>
     <Row>
