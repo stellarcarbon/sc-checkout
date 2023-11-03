@@ -173,11 +173,11 @@
         <Slider
             bind:value={carbonAmount}
             labelText="CARBON (in tonnes CO2-equivalent: tCO₂-e)"
-            min={1}
+            min={0}
             max={120}
         />
         {#await quotePromise}
-            <p>The total cost is US $...</p>
+            <p>The total cost is US $ ...</p>
         {:then quote} 
             <p>The total cost is US <strong>$ {parseFloat(quote.total_cost).toFixed(2)}</strong></p>
         {:catch error}

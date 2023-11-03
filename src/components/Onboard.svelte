@@ -53,7 +53,9 @@
     <Row>
     <Column>
         <p>Please connect your wallet to continue</p>
-        {#await supportedWallets then wallets}
+        {#await supportedWallets}
+          <p>... loading available wallets</p>
+        {:then wallets}
           <RadioButtonGroup 
             orientation="vertical"
             legendText="Supported wallets:" 
