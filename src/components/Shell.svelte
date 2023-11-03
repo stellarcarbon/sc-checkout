@@ -14,7 +14,7 @@
   
 </script>
   
-  <Header company="Stellarcarbon" platformName="Offset">
+  <Header company="Stellarcarbon" platformName="Sink">
     <svelte:fragment slot="skip-to-content">
       <SkipToContent />
     </svelte:fragment>
