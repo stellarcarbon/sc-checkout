@@ -26,9 +26,9 @@ export class CarbonService {
      * @throws ApiError
      */
     public static getCarbonQuoteCarbonQuoteGet({
-        carbonAmount = 1,
+        carbonAmount,
     }: {
-        carbonAmount?: number,
+        carbonAmount?: (number | string),
     }): CancelablePromise<QuoteResponse> {
         return __request(OpenAPI, {
             method: 'GET',
@@ -37,7 +37,12 @@ export class CarbonService {
                 'carbon_amount': carbonAmount,
             },
             errors: {
+                400: `Horizon transaction has failed or is malformed`,
+                410: `Data requested from Horizon is before recorded history`,
                 422: `Validation Error`,
+                500: `An unhandled error occurred on the server`,
+                503: `Horizon's historical database is too stale`,
+                504: `Horizon could not confirm transaction inclusion (check network conditions)`,
             },
         });
     }
@@ -68,21 +73,21 @@ export class CarbonService {
     public static buildSinkCarbonXdrSinkCarbonXdrPost({
         funder,
         recipient,
-        carbonAmount = 1,
+        carbonAmount,
         paymentAsset,
         vcsProjectId,
         memoType,
-        memoValue = '',
+        memoValue,
         email,
     }: {
         funder: string,
-        recipient?: string,
-        carbonAmount?: number,
-        paymentAsset?: PaymentAsset,
-        vcsProjectId?: VcsProject,
-        memoType?: MemoType,
-        memoValue?: string,
-        email?: string,
+        recipient?: (string | null),
+        carbonAmount?: (number | string),
+        paymentAsset?: (PaymentAsset | null),
+        vcsProjectId?: (VcsProject | null),
+        memoType?: (MemoType | null),
+        memoValue?: (string | null),
+        email?: (string | null),
     }): CancelablePromise<SinkingResponse> {
         return __request(OpenAPI, {
             method: 'POST',
@@ -98,7 +103,13 @@ export class CarbonService {
                 'email': email,
             },
             errors: {
+                400: `No payment path was found for this Stellar account`,
+                404: `Stellar account was not found on the Public Global Stellar Network`,
+                410: `Data requested from Horizon is before recorded history`,
                 422: `Validation Error`,
+                500: `An unhandled error occurred on the server`,
+                503: `Horizon's historical database is too stale`,
+                504: `Horizon could not confirm transaction inclusion (check network conditions)`,
             },
         });
     }

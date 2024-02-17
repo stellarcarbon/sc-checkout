@@ -2,9 +2,4 @@
 /* tslint:disable */
 /* eslint-disable */
 
-/**
- * An enumeration.
- */
-export enum VcsProject {
-    _1360 = '1360',
-}
+export type VcsProject = string;
