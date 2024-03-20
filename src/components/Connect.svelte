@@ -27,7 +27,7 @@
         console.log($SinkStore)
     }
 
-    $: emailInvalid = userEmail && !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(userEmail)
+    $: emailInvalid = userEmail && !/^\w+([\+\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(userEmail)
 </script>
 
   {#if !$SinkStore.pubkey}
