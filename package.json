@@ -8,6 +8,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "check": "svelte-check --tsconfig ./tsconfig.json",
+    "deploy": "surge --domain 'https://offset-gui.surge.sh' ./dist",
     "generate-client": "openapi --useOptions --input https://api-beta.stellarcarbon.io/openapi.json --output ./src/client --client axios"
   },
   "devDependencies": {

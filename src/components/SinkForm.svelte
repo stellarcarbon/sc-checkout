@@ -27,6 +27,8 @@
     import { ApiError, CarbonService, PaymentAsset, type OpenAPIConfig } from "../client";
     import { request as __request } from "../client/core/request";
 
+    import vcs1360Url from '../../media/VCS-1360-Comite-de-Vigilancia-y-Control-Comunal-cuidando-las-tierras-indigenas.jpg'
+
     let quoteError = ""
     let carbonAmount = get(SinkStore).carbonAmount
     const getQuote = async (quoteAmount) => {
@@ -156,7 +158,7 @@
         <Column>
           <ImageLoader
             fadeIn
-            src="/media/VCS-1360-Comite-de-Vigilancia-y-Control-Comunal-cuidando-las-tierras-indigenas.jpg"
+            src={vcs1360Url}
           />
         </Column>
         <Column>
