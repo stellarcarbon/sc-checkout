@@ -28,6 +28,9 @@ export class CarbonService {
     public static getCarbonQuoteCarbonQuoteGet({
         carbonAmount,
     }: {
+        /**
+         * requested amount of CARBON
+         */
         carbonAmount?: (number | string),
     }): CancelablePromise<QuoteResponse> {
         return __request(OpenAPI, {
@@ -52,16 +55,6 @@ export class CarbonService {
      * An offset is done by atomically swapping CARBON for CarbonSINK. This endpoint can be used to
      * build the XDR for such a sinking transaction.
      *
-     * - *funder*: public key of the account that pays for the transaction
-     * - *recipient*: public key of the account that will receive CarbonSINK (default: funder)
-     * - *carbon_amount*: the amount of CARBON to sink
-     * - *payment_asset*: the preferred asset to pay with when the funder does not have a sufficient CARBON balance
-     * - *vcs_project_id*: carbon project from which credits will be retired
-     * - *memo_type*: the kind of memo that will be attached to the transaction
-     * - *memo_value*: description of the reason for offsetting
-     * - *email*: email address that will receive the Verra certificate
-     * (also supports `Your Name <account@domain.xyz>` format)
-     *
      * If the funder does not have a sufficient balance of CARBON, a path payment will be used to
      * purchase the exact amount of CARBON to be retired. The most favorable rate will be selected
      * from the possible paths. The USDC value of this payment is included in the response for
@@ -80,13 +73,37 @@ export class CarbonService {
         memoValue,
         email,
     }: {
+        /**
+         * public key of the account that pays for the transaction
+         */
         funder: string,
+        /**
+         * public key of the account that will receive CarbonSINK (default: funder)
+         */
         recipient?: (string | null),
+        /**
+         * the amount of CARBON to sink
+         */
         carbonAmount?: (number | string),
+        /**
+         * the preferred asset to pay with when the funder does not have a sufficient CARBON balance
+         */
         paymentAsset?: (PaymentAsset | null),
+        /**
+         * carbon project from which credits will be retired
+         */
         vcsProjectId?: (VcsProject | null),
+        /**
+         * the kind of memo that will be attached to the transaction
+         */
         memoType?: (MemoType | null),
+        /**
+         * description of the reason for offsetting
+         */
         memoValue?: (string | null),
+        /**
+         * email address that will receive the Verra certificate (also supports `Your Name <account@domain.xyz>` format)
+         */
         email?: (string | null),
     }): CancelablePromise<SinkingResponse> {
         return __request(OpenAPI, {
