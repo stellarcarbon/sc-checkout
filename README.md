@@ -1,47 +1,62 @@
-# Svelte + TS + Vite
+# Stellarcarbon Checkout
 
-This template should help get you started developing with Svelte and TypeScript in Vite.
+This dedicated checkout UI currently serves as a functional demo, and as a reference implementation showcasing the use of an automatically generated Typescript client for our Stellarcarbon API. It has been used for usability testing and is currently not used in production. Our [new website](https://github.com/stellarcarbon/sc-website) has integrated checkout functionality in its user dashboard.
 
-## Recommended IDE Setup
+## Online demo environment
+
+https://offset-gui.surge.sh/
+
+There are three steps in the user flow:
+1. connect wallet
+1. confirmation, provide name & email (optional)
+1. sink carbon
+
+Be aware that this functional demo is connected to our production API. It can be used to sink real carbon. Always check any transactions that you may sign with your wallet, and expect them to be submitted to the public network.
+
+## Developer instructions
+
+### Recommended IDE setup
 
 [VS Code](https://code.visualstudio.com/) + [Svelte](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode).
 
-## Need an official Svelte framework?
+### Installation
 
-Check out [SvelteKit](https://github.com/sveltejs/kit#readme), which is also powered by Vite. Deploy anywhere with its serverless-first approach and adapt to various platforms, with out of the box support for TypeScript, SCSS, and Less, and easily-added support for mdsvex, GraphQL, PostCSS, Tailwind CSS, and more.
+Have recent versions of [Node](https://nodejs.org), [npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm), and [yarn](https://yarnpkg.com/getting-started/install) installed (globally).
 
-## Technical considerations
+Install local dependencies
+```
+yarn install
+```
 
-**Why use this over SvelteKit?**
+### Run scripts
 
-- It brings its own routing solution which might not be preferable for some users.
-- It is first and foremost a framework that just happens to use Vite under the hood, not a Vite app.
+Run local development server
+```
+yarn run dev
+```
 
-This template contains as little as possible to get started with Vite + TypeScript + Svelte, while taking into account the developer experience with regards to HMR and intellisense. It demonstrates capabilities on par with the other `create-vite` templates and is a good starting point for beginners dipping their toes into a Vite + Svelte project.
+Get Svelte diagnostics
+```
+yarn run check
+```
 
-Should you later need the extended capabilities and extensibility provided by SvelteKit, the template has been structured similarly to SvelteKit so that it is easy to migrate.
+Build a static bundle
+```
+yarn run build
+```
 
-**Why `global.d.ts` instead of `compilerOptions.types` inside `jsconfig.json` or `tsconfig.json`?**
+## Generate a Stellarcarbon API client
 
-Setting `compilerOptions.types` shuts out all other types not explicitly listed in the configuration. Using triple-slash references keeps the default TypeScript setting of accepting type information from the entire workspace, while also adding `svelte` and `vite/client` type information.
+Stellarcarbon uses an [OpenAPI](https://www.openapis.org/) schema to define its API. Use our [openapi.json](https://api-beta.stellarcarbon.io/openapi.json) to obtain the latest version of the API schema.
 
-**Why include `.vscode/extensions.json`?**
+We recommend the use of an automatically generated client to interact with our API. In this repository we use a tool that builds a Typescript client. OpenAPI client generators are available for many programming languages and environments.
 
-Other templates indirectly recommend extensions via the README, but this file allows VS Code to prompt the user to install the recommended extension upon opening the project.
+To generate a TS client with `openapi-typescript-codegen`, run
+```
+openapi --useOptions --input https://api-beta.stellarcarbon.io/openapi.json --output ./src/client
+```
 
-**Why enable `allowJs` in the TS template?**
-
-While `allowJs: false` would indeed prevent the use of `.js` files in the project, it does not prevent the use of JavaScript syntax in `.svelte` files. In addition, it would force `checkJs: false`, bringing the worst of both worlds: not being able to guarantee the entire codebase is TypeScript, and also having worse typechecking for the existing JavaScript. In addition, there are valid use cases in which a mixed codebase may be relevant.
-
-**Why is HMR not preserving my local component state?**
-
-HMR state preservation comes with a number of gotchas! It has been disabled by default in both `svelte-hmr` and `@sveltejs/vite-plugin-svelte` due to its often surprising behavior. You can read the details [here](https://github.com/rixo/svelte-hmr#svelte-hmr).
-
-If you have state that's important to retain within a component, consider creating an external store which would not be replaced by HMR.
-
-```ts
-// store.ts
-// An extremely simple external store
-import { writable } from 'svelte/store'
-export default writable(0)
+or in this repo, simply do
+```
+yarn run generate-client
 ```
