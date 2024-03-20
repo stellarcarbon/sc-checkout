@@ -4,7 +4,7 @@
       Row,
       Column,
       Tile,
-      SkeletonPlaceholder,
+      ImageLoader,
       Form,
       TextInput,
       Button,
@@ -153,7 +153,12 @@
 
 <Grid>
     <Row>
-        <Column><SkeletonPlaceholder /></Column>
+        <Column>
+          <ImageLoader
+            fadeIn
+            src="/media/VCS-1360-Comite-de-Vigilancia-y-Control-Comunal-cuidando-las-tierras-indigenas.jpg"
+          />
+        </Column>
         <Column>
             <em>VCS Project 1360</em>
             <p>Shipibo Conibo and Cacataibo Indigenous Communities in Ucayali, Peru.</p>
