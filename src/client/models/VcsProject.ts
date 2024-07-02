@@ -2,4 +2,6 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type VcsProject = string;
+export enum VcsProject {
+    _1360 = '1360',
+}

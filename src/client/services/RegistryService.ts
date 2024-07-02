@@ -23,8 +23,9 @@ export class RegistryService {
      * @returns RetirementsResponse Successful Response
      * @throws ApiError
      */
-    public static listRetirementsRegistryRetirementsGet({
+    public static listRetirements({
         forAddress,
+        dateGte,
     }: {
         /**
          * Optionally filter the retirements list by Stellar address.
@@ -34,12 +35,17 @@ export class RegistryService {
          *
          */
         forAddress?: (string | null),
+        /**
+         * Only list retirements done on or after this date.
+         */
+        dateGte?: (string | null),
     }): CancelablePromise<RetirementsResponse> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/registry/retirements',
             query: {
                 'for_address': forAddress,
+                'date_gte': dateGte,
             },
             errors: {
                 400: `The request you sent was invalid in some way`,
@@ -63,7 +69,7 @@ export class RegistryService {
      * @returns InventoryResponse Successful Response
      * @throws ApiError
      */
-    public static listInventoryRegistryInventoryGet(): CancelablePromise<InventoryResponse> {
+    public static listInventory(): CancelablePromise<InventoryResponse> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/registry/inventory',

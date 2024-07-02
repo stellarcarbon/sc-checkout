@@ -33,7 +33,7 @@
     let carbonAmount = get(SinkStore).carbonAmount
     const getQuote = async (quoteAmount) => {
       try {
-        return await CarbonService.getCarbonQuoteCarbonQuoteGet({
+        return await CarbonService.getCarbonQuote({
           carbonAmount: carbonAmount
         })
       } catch (error) {
@@ -83,7 +83,7 @@
         email = `${$SinkStore.userName} <${$SinkStore.userEmail}>`
       }
       try {
-        const sinkResp = await CarbonService.buildSinkCarbonXdrSinkCarbonXdrPost({
+        const sinkResp = await CarbonService.buildSinkCarbonXdr({
           funder: $SinkStore.pubkey,
           carbonAmount: $SinkStore.carbonAmount,
           paymentAsset: $SinkStore.paymentAsset,
